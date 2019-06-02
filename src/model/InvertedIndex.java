@@ -395,9 +395,6 @@ public class InvertedIndex {
         return listOfCluster;
     }
 
-    /**
-     * @param cluster the cluster to set
-     */
     public void setListOfCluster(ArrayList<Cluster> cluster) {
         this.listOfCluster = cluster;
     }
@@ -413,10 +410,8 @@ public class InvertedIndex {
         }
     }
 
-    /**
-     * Fungsi untuk clustering
-     */
     public void clustering() {
+        preClustering();
         for (int i = 0; i < NUMBER_OF_DOCUMENT_CLUSTER; i++) {
             Cluster cluster = new Cluster(i);
             cluster.setCenter(listOfDocument.get(i));
@@ -426,7 +421,6 @@ public class InvertedIndex {
         for (int i = 0; i < listOfDocument.size(); i++) {
             Document doc = listOfDocument.get(i);
             ArrayList<DocumentToClusterSimilarity> listOfSimilarity = new ArrayList<DocumentToClusterSimilarity>();
-            
             for (int j = 0; j < listOfCluster.size(); j++) {
                 double sim = getCosineSimilarity(listOfDocument.get(i).getListOfClusteringPosting(),
                         listOfCluster.get(j).getCenter().getListOfClusteringPosting());

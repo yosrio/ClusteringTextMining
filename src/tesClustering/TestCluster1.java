@@ -30,6 +30,7 @@ public class TestCluster1 {
         doc1.IndonesianStemming();
         doc2.IndonesianStemming();
         doc3.IndonesianStemming();
+        
         index.addNewDocument(doc1);
         index.addNewDocument(doc2);
         index.addNewDocument(doc3);

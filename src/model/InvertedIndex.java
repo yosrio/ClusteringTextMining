@@ -19,6 +19,8 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.lang.Math;
+import java.util.Random;
 
 /**
  *
@@ -400,21 +402,20 @@ public class InvertedIndex {
     }
 
     public void preClustering() {
-        // baca seluruh document
         for (int i = 0; i < listOfDocument.size(); i++) {
-            // baca idDoc
             int idDoc = listOfDocument.get(i).getId();
-            // buat posting dengan nilai TF-IDFnya
             listOfDocument.get(i).setListOfClusteringPosting(makeTFIDF(idDoc));
 
         }
     }
 
     public void clustering() {
+        makeDictionaryWithTermNumber();
         preClustering();
+        Random random = new Random();
         for (int i = 0; i < NUMBER_OF_DOCUMENT_CLUSTER; i++) {
             Cluster cluster = new Cluster(i);
-            cluster.setCenter(listOfDocument.get(i));
+            cluster.setCenter(listOfDocument.get(random.nextInt(listOfDocument.size())));
             listOfCluster.add(cluster);
         }
 

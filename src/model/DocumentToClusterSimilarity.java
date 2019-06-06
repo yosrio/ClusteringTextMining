@@ -9,7 +9,7 @@ package model;
  *
  * @author yosrio
  */
-class DocumentToClusterSimilarity implements Comparable<DocumentToClusterSimilarity>{
+public class DocumentToClusterSimilarity implements Comparable<DocumentToClusterSimilarity>{
     private double similarity;
     private Cluster cluster;
 
@@ -18,6 +18,10 @@ class DocumentToClusterSimilarity implements Comparable<DocumentToClusterSimilar
 
     public DocumentToClusterSimilarity(double similarity, Cluster cluster) {
         this.similarity = similarity;
+        this.cluster = cluster;
+    }
+    
+    public DocumentToClusterSimilarity(Cluster cluster) {
         this.cluster = cluster;
     }
 

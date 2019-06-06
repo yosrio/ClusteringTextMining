@@ -34,7 +34,9 @@ public class Document implements Comparable<Document> {
     private String content;
     private String realContent;
     private ArrayList<Posting> listOfClusteringPosting  = new ArrayList<Posting>();
-
+    private String title;
+    private String author;
+    
     public Document() {
     }
 
@@ -42,6 +44,23 @@ public class Document implements Comparable<Document> {
         this.id = id;
     }
 
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+    
+    
     public Document(String content) {
         this.content = content;
         this.realContent = content;
@@ -88,6 +107,7 @@ public class Document implements Comparable<Document> {
     public String[] getListofTerm() {
         String value = this.getContent();
         value = value.replaceAll("[.,?!]", "");
+        value = value.replaceAll("\n", " ");
         return value.split(" ");
     }
 
@@ -124,6 +144,16 @@ public class Document implements Comparable<Document> {
         char[] chr = new char[4096];
         final StringBuffer buffer = new StringBuffer();
         final FileReader reader = new FileReader(file);
+            String name = file.getName().replace(".txt", "");
+            String[] splitter;
+        try {
+            splitter = name.split("-");
+            setAuthor(splitter[0]);
+            setTitle(splitter[1]);
+        } catch (Exception e) {
+            
+        }
+
         try {
             while ((len = reader.read(chr)) > 0) {
                 buffer.append(chr, 0, len);
@@ -133,6 +163,8 @@ public class Document implements Comparable<Document> {
         }
         this.id = idDoc;
         this.content = buffer.toString();
+//        IndonesianStemming();
+        this.realContent = buffer.toString();
     }
 
     @Override

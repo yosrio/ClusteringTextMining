@@ -5,38 +5,28 @@
  */
 package tesClustering;
 
+import test.*;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
-import model.Cluster;
 import model.Document;
+import model.DocumentToClusterSimilarity;
 import model.InvertedIndex;
-import model.Posting;
 
 /**
  *
  * @author yosrio
  */
-public class TestCluster1 {
+public class tesFileDokumen1 {
 
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
-        Document doc1 = new Document(1, "Fahri Hamzah Usul Ibu Kota Pindah ke Kepulauan Seribu");
-        Document doc2 = new Document(2, "Gaya Nyentrik Menteri Susi Saat Pimpin Penenggelaman 13 Kapal Vietnam di Kalbar");
-        Document doc3 = new Document(3, "TNI AL: KRI Tjiptadi-381 Diprovokasi Kapal Pengawas Ikan Vietnam ");
-        
+    public static void main(String[] args) throws IOException {
+        File dir = new File("dokumenCoba");
         InvertedIndex index = new InvertedIndex();
-
-        doc1.IndonesianStemming();
-        doc2.IndonesianStemming();
-        doc3.IndonesianStemming();
-        
-        index.addNewDocument(doc1);
-        index.addNewDocument(doc2);
-        index.addNewDocument(doc3);
-
+        index.readDirectory(dir);
         index.clustering();
-       
         for (int i = 0; i < index.getListOfCluster().size(); i++) {
             System.out.println("cluster = " + i + ", center = " + index.getListOfCluster().get(i).getCenter().getId());
             for (int j = 0; j < index.getListOfCluster().get(i).getMember().size(); j++) {
@@ -44,4 +34,5 @@ public class TestCluster1 {
             }
         }
     }
+
 }

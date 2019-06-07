@@ -11,7 +11,6 @@ import javax.swing.table.DefaultTableModel;
 import model.Cluster;
 import model.Document;
 import model.InvertedIndex;
-import model.TableModelData;
 
 /**
  *
@@ -20,9 +19,9 @@ import model.TableModelData;
 public class Main extends javax.swing.JFrame {
 
     public static InvertedIndex index;
-    public static InvertedIndex index2;
-    TableModelData model;
+    DefaultTableModel model;
     DefaultTableModel model2;
+    File directory;
 
     /**
      * Creates new form Main
@@ -30,8 +29,7 @@ public class Main extends javax.swing.JFrame {
     public Main() {
         initComponents();
         index = new InvertedIndex();
-        index2 = new InvertedIndex();
-        File directory = new File("dokumenCoba");
+        directory = new File("dokumenCoba");
         index.readDirectory(directory);
         loadData();
         loadDataClustering();
@@ -52,9 +50,6 @@ public class Main extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         Table = new javax.swing.JTable();
-        jLabel1 = new javax.swing.JLabel();
-        jumlahCluster = new javax.swing.JTextField();
-        okButton = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -65,11 +60,11 @@ public class Main extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         jScrollPane4 = new javax.swing.JScrollPane();
         jTextArea2 = new javax.swing.JTextArea();
-        jButton1 = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         cluster1 = new javax.swing.JLabel();
         cluster2 = new javax.swing.JLabel();
+        coba = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(1, 50, 67));
@@ -89,16 +84,6 @@ public class Main extends javax.swing.JFrame {
             }
         ));
         jScrollPane1.setViewportView(Table);
-
-        jLabel1.setText("Jumlah Cluster ");
-
-        jumlahCluster.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jumlahClusterActionPerformed(evt);
-            }
-        });
-
-        okButton.setText("Ok");
 
         jLabel2.setFont(new java.awt.Font("Footlight MT Light", 1, 36)); // NOI18N
         jLabel2.setText("CLUSTERING");
@@ -145,16 +130,16 @@ public class Main extends javax.swing.JFrame {
         jTextArea2.setRows(5);
         jScrollPane4.setViewportView(jTextArea2);
 
-        jButton1.setText("Coba");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        jLabel5.setText("Center 1:");
+
+        jLabel7.setText("Center 2:");
+
+        coba.setText("Coba");
+        coba.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                cobaActionPerformed(evt);
             }
         });
-
-        jLabel5.setText("Cluster 1:");
-
-        jLabel7.setText("Cluster 2:");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -185,24 +170,19 @@ public class Main extends javax.swing.JFrame {
                                             .addComponent(jLabel4)
                                             .addGap(29, 29, 29))
                                         .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
-                                            .addGap(15, 15, 15)
-                                            .addComponent(jButton1)
+                                            .addGap(12, 12, 12)
+                                            .addComponent(coba)
                                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
-                                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(jPanel2Layout.createSequentialGroup()
-                                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(jumlahCluster, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(okButton))
-                                        .addGroup(jPanel2Layout.createSequentialGroup()
-                                            .addComponent(jLabel5)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                            .addComponent(cluster1))
+                                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                         .addGroup(jPanel2Layout.createSequentialGroup()
                                             .addComponent(jLabel7)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                            .addComponent(cluster2, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addComponent(cluster2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                        .addGroup(jPanel2Layout.createSequentialGroup()
+                                            .addComponent(jLabel5)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addComponent(cluster1, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addGap(14, 14, 14))
                                 .addComponent(akurasiButton, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 436, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -219,24 +199,21 @@ public class Main extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel1)
-                                    .addComponent(jumlahCluster, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(okButton))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel5)
-                                    .addComponent(cluster1))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel7)
-                                    .addComponent(cluster2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jButton1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(cluster1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 22, Short.MAX_VALUE))
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                                .addGap(0, 5, Short.MAX_VALUE)
+                                .addComponent(coba)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(cluster2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -274,10 +251,6 @@ public class Main extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jumlahClusterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jumlahClusterActionPerformed
-
-    }//GEN-LAST:event_jumlahClusterActionPerformed
-
     private void addButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addButtonMouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_addButtonMouseClicked
@@ -286,10 +259,9 @@ public class Main extends javax.swing.JFrame {
 
     }//GEN-LAST:event_akurasiButtonMouseClicked
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        model2.removeRow(0);
+    private void cobaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cobaActionPerformed
         loadDataClustering();
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_cobaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -338,8 +310,7 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.ButtonGroup buttonGroup2;
     private javax.swing.JLabel cluster1;
     private javax.swing.JLabel cluster2;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JButton coba;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -352,27 +323,33 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JTextArea jTextArea2;
-    private javax.swing.JTextField jumlahCluster;
-    private javax.swing.JButton okButton;
     // End of variables declaration//GEN-END:variables
 
     public void loadData() {
         ArrayList<Document> result = index.getListOfDocument();
-        model = new TableModelData(result);
+        String[] column = {"Id Document","Title Song"};
+        model = new DefaultTableModel(null,column);
+        for (int i = 0; i < result.size(); i++) {
+            model.addRow(new Object[]{result.get(i).getId(),
+            result.get(i).getAuthor() + " " + result.get(i).getTitle()});
+        }
         Table.setModel(model);
     }
 
     public void loadDataClustering() {
         index.clustering();
-        String[] column = {"Cluster Id","Title"};
+        String[] column = {"Cluster Id","Title Song"};
         model2 = new DefaultTableModel(null,column);
         ArrayList<Cluster> cluster = index.getListOfCluster();
-        cluster1.setText(String.valueOf(cluster.get(0).getCenter().getId()));
-        cluster2.setText(String.valueOf(cluster.get(1).getCenter().getId()));
+        cluster1.setText(String.valueOf(cluster.get(0).getCenter().getAuthor() + "-" +
+                            cluster.get(0).getCenter().getTitle()));
+        cluster2.setText(String.valueOf(cluster.get(1).getCenter().getAuthor() + "-" +
+                            cluster.get(1).getCenter().getTitle()));
         for (int i = 0; i < cluster.size(); i++) {
             for (int j = 0; j < cluster.get(i).getMember().size(); j++) {
                 model2.addRow(new Object[]{cluster.get(i).getIdCluster(),
-                    cluster.get(i).getMember().get(j).getTitle()});
+                    cluster.get(i).getMember().get(j).getAuthor() + "-" +
+                            cluster.get(i).getMember().get(j).getTitle()});
             }
         }
         

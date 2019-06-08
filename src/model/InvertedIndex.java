@@ -418,6 +418,27 @@ public class InvertedIndex {
             cluster.setCenter(listOfDocument.get(random.nextInt(listOfDocument.size())));
             listOfCluster.add(cluster);
         }
+//        int rand = random.nextInt(listOfDocument.size());
+//        for (int i = 0; i < NUMBER_OF_DOCUMENT_CLUSTER; i++) {
+//            Cluster cluster = new Cluster(i);
+//            if (i == 0) {
+//                cluster.setCenter(listOfDocument.get(rand));
+//                listOfCluster.add(cluster);
+//            } else {
+//                System.out.println("ld " + listOfDocument.get(random.nextInt(listOfDocument.size())).getId());
+//                System.out.println("rand " + listOfDocument.get(rand).getId());
+//                if (listOfDocument.get(random.nextInt(listOfDocument.size())).getId() != 
+//                        listOfDocument.get(rand).getId()) {
+//                    System.out.println("masuk if");
+//                    rand = random.nextInt(listOfDocument.size());
+//                    cluster.setCenter(listOfDocument.get(rand));
+//                    listOfCluster.add(cluster);
+//                } else {
+//                    System.out.println("masuk else");
+//                    i--;
+//                }
+//            }
+//        }
 
         for (int i = 0; i < listOfDocument.size(); i++) {
             Document doc = listOfDocument.get(i);

@@ -29,7 +29,7 @@ public class Main extends javax.swing.JFrame {
     public Main() {
         initComponents();
         index = new InvertedIndex();
-        directory = new File("dokumenCoba");
+        directory = new File("dokumen");
         index.readDirectory(directory);
         loadData();
         loadDataClustering();
@@ -260,7 +260,7 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_akurasiButtonMouseClicked
 
     private void cobaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cobaActionPerformed
-        loadDataClustering();
+        
     }//GEN-LAST:event_cobaActionPerformed
 
     /**

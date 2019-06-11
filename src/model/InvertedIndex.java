@@ -412,46 +412,32 @@ public class InvertedIndex {
     public void clustering() {
         makeDictionaryWithTermNumber();
         preClustering();
-        Random random = new Random();
+        ArrayList<Document> c1 = new ArrayList<>();
+        ArrayList<Document> c2 = new ArrayList<>();
+         Random random = new Random();
         for (int i = 0; i < NUMBER_OF_DOCUMENT_CLUSTER; i++) {
             Cluster cluster = new Cluster(i);
             cluster.setCenter(listOfDocument.get(random.nextInt(listOfDocument.size())));
             listOfCluster.add(cluster);
-        }
-//        int rand = random.nextInt(listOfDocument.size());
-//        for (int i = 0; i < NUMBER_OF_DOCUMENT_CLUSTER; i++) {
-//            Cluster cluster = new Cluster(i);
-//            if (i == 0) {
-//                cluster.setCenter(listOfDocument.get(rand));
-//                listOfCluster.add(cluster);
-//            } else {
-//                System.out.println("ld " + listOfDocument.get(random.nextInt(listOfDocument.size())).getId());
-//                System.out.println("rand " + listOfDocument.get(rand).getId());
-//                if (listOfDocument.get(random.nextInt(listOfDocument.size())).getId() != 
-//                        listOfDocument.get(rand).getId()) {
-//                    System.out.println("masuk if");
-//                    rand = random.nextInt(listOfDocument.size());
-//                    cluster.setCenter(listOfDocument.get(rand));
-//                    listOfCluster.add(cluster);
-//                } else {
-//                    System.out.println("masuk else");
-//                    i--;
-//                }
-//            }
-//        }
-
-        for (int i = 0; i < listOfDocument.size(); i++) {
-            Document doc = listOfDocument.get(i);
+}
+        
+        for (int i = NUMBER_OF_DOCUMENT_CLUSTER; i < listOfDocument.size(); i++) {
             ArrayList<DocumentToClusterSimilarity> listOfSimilarity = new ArrayList<DocumentToClusterSimilarity>();
             for (int j = 0; j < listOfCluster.size(); j++) {
-                double sim = getCosineSimilarity(listOfDocument.get(i).getListOfClusteringPosting(),
-                        listOfCluster.get(j).getCenter().getListOfClusteringPosting());
-                DocumentToClusterSimilarity simDoc
-                        = new DocumentToClusterSimilarity(sim, listOfCluster.get(j));
-                listOfSimilarity.add(simDoc);
+                double similarity = getCosineSimilarity(listOfDocument.get(i).getListOfClusteringPosting() 
+                        ,listOfCluster.get(j).getCenter().getListOfClusteringPosting());
+                DocumentToClusterSimilarity ds = new DocumentToClusterSimilarity(similarity, listOfCluster.get(j));
+                listOfSimilarity.add(ds);
             }
             Collections.sort(listOfSimilarity);
-            listOfSimilarity.get(0).getCluster().getMember().add(doc);
+            
+            if (listOfSimilarity.get(0).getCluster().getIdCluster()==0) {
+                c1.add(listOfDocument.get(i));
+            }else if (listOfSimilarity.get(0).getCluster().getIdCluster()==1) {
+                c2.add(listOfDocument.get(i));
+            }
         }
+        listOfCluster.get(0).setMember(c1);
+        listOfCluster.get(1).setMember(c2);
     }
 }

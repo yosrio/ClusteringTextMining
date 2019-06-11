@@ -36,6 +36,7 @@ public class Document implements Comparable<Document> {
     private ArrayList<Posting> listOfClusteringPosting  = new ArrayList<Posting>();
     private String title;
     private String author;
+    private int idCluster = -1;
     
     public Document() {
     }
@@ -59,6 +60,16 @@ public class Document implements Comparable<Document> {
     public void setAuthor(String author) {
         this.author = author;
     }
+    public int getIdCluster() {
+        return idCluster;
+    }
+
+    /**
+     * @param idCluster the idCluster to set
+     */
+    public void setIdCluster(int idCluster) {
+        this.idCluster = idCluster;
+}
     
     
     public Document(String content) {

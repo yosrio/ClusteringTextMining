@@ -174,7 +174,7 @@ public class Document implements Comparable<Document> {
         }
         this.id = idDoc;
         this.content = buffer.toString();
-//        IndonesianStemming();
+        IndonesianStemming();
         this.realContent = buffer.toString();
     }
 

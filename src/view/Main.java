@@ -172,7 +172,7 @@ public class Main extends javax.swing.JFrame {
 
     private void TableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TableMouseClicked
         int row = Table.getSelectedRow();
-        int idDoc = Integer.parseInt(Table.getValueAt(row, 0).toString())-1;
+        int idDoc = Integer.parseInt(Table.getValueAt(row, 0).toString()) - 1;
         int id = index.getListOfDocument().get(idDoc).getId();
         String author = index.getListOfDocument().get(idDoc).getAuthor();
         String title = index.getListOfDocument().get(idDoc).getTitle();
@@ -237,28 +237,29 @@ public class Main extends javax.swing.JFrame {
 
     public void loadData() {
         ArrayList<Document> result = index.getListOfDocument();
-        String[] column = {"Id Document","Title Song"};
-        model = new DefaultTableModel(null,column);
+        String[] column = {"Id Document", "Title Song"};
+        model = new DefaultTableModel(null, column);
         for (int i = 0; i < result.size(); i++) {
             model.addRow(new Object[]{result.get(i).getId(),
-            result.get(i).getAuthor() + " - " + result.get(i).getTitle()});
+                result.get(i).getAuthor() + " - " + result.get(i).getTitle()});
         }
         Table.setModel(model);
     }
 
     public void loadDataClustering() {
         index.clustering();
-        String[] column = {"Cluster Id","Id Doc","Title Song"};
-        model2 = new DefaultTableModel(null,column);
+        String[] column = {"Cluster Id", "Id Doc", "Title Song"};
+        model2 = new DefaultTableModel(null, column);
         ArrayList<Cluster> cluster = index.getListOfCluster();
-        cluster1.setText(String.valueOf(cluster.get(0).getCenter().getId()));
-        cluster2.setText(String.valueOf(cluster.get(1).getCenter().getId()));
+        cluster1.setText("c1 = " + String.valueOf(cluster.get(0).getCenter().getId()));
+        cluster2.setText("c2 = " + String.valueOf(cluster.get(1).getCenter().getId()));
         for (int i = 0; i < cluster.size(); i++) {
             ArrayList<Document> docKlaster = cluster.get(i).getMember();
             for (int j = 0; j < docKlaster.size(); j++) {
-                model2.addRow(new Object[]{cluster.get(i).getIdCluster(), docKlaster.get(j).getId(),
-                    docKlaster.get(j).getAuthor() + "-" +
-                            docKlaster.get(j).getTitle()});
+                model2.addRow(new Object[]{cluster.get(i).getIdCluster()+1, docKlaster.get(j).getId(),
+                    docKlaster.get(j).getAuthor() + "-"
+                    + docKlaster.get(j).getTitle()});
+//                System.out.println(cluster.get(i).getIdCluster());
             }
         }
         Table2.setModel(model2);
